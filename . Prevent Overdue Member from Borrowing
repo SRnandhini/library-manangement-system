@@ -1,0 +1,24 @@
+DELIMITER //
+CREATE TRIGGER before_loan_insert
+BEFORE INSERT ON Loans
+FOR EACH ROW
+BEGIN
+    DECLARE overdue_count INT;
+    DECLARE member_status VARCHAR(20);
+    
+    SELECT COUNT(*) INTO overdue_count FROM Loans 
+    WHERE MemberID = NEW.MemberID AND Status = 'On Loan' AND DueDate < CURRENT_DATE;
+    
+    SELECT Status INTO member_status FROM Members WHERE MemberID = NEW.MemberID;
+    
+    IF overdue_count > 0 THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Member has overdue books and cannot check out more';
+    END IF;
+    
+    IF member_status != 'Active' THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Member account is not active';
+    END IF;
+END //
+DELIMITER ;
