@@ -1,0 +1,41 @@
+DELIMITER //
+CREATE PROCEDURE CheckOutBook(
+    IN p_BookID INT,
+    IN p_MemberID INT,
+    OUT p_Result VARCHAR(100)
+)
+BEGIN
+    DECLARE v_AvailableCopies INT;
+    DECLARE v_MemberStatus VARCHAR(20);
+    DECLARE v_OverdueLoans INT;
+    
+    -- Check book availability
+    SELECT AvailableCopies INTO v_AvailableCopies FROM Books WHERE BookID = p_BookID;
+    
+    -- Check member status
+    SELECT Status INTO v_MemberStatus FROM Members WHERE MemberID = p_MemberID;
+    
+    -- Check if member has overdue loans
+    SELECT COUNT(*) INTO v_OverdueLoans FROM Loans 
+    WHERE MemberID = p_MemberID AND Status = 'On Loan' AND DueDate < CURRENT_DATE;
+    
+    IF v_AvailableCopies <= 0 THEN
+        SET p_Result = 'Error: No available copies of this book';
+    ELSEIF v_MemberStatus != 'Active' THEN
+        SET p_Result = CONCAT('Error: Member status is ', v_MemberStatus);
+    ELSEIF v_OverdueLoans > 0 THEN
+        SET p_Result = 'Error: Member has overdue books and cannot check out more';
+    ELSE
+        -- Create loan record
+        INSERT INTO Loans (BookID, MemberID, LoanDate, DueDate, Status)
+        VALUES (p_BookID, p_MemberID, CURRENT_DATE, DATE_ADD(CURRENT_DATE, INTERVAL 14 DAY), 'On Loan');
+        
+        -- Update book availability
+        UPDATE Books 
+        SET AvailableCopies = AvailableCopies - 1 
+        WHERE BookID = p_BookID;
+        
+        SET p_Result = 'Book checked out successfully';
+    END IF;
+END //
+DELIMITER ;
