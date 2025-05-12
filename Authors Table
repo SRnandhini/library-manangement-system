@@ -1,0 +1,8 @@
+CREATE TABLE Authors (
+    AuthorID INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    BirthDate DATE,
+    Nationality VARCHAR(50),
+    Biography TEXT
+);
