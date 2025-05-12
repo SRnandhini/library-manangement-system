@@ -1,0 +1,29 @@
+-- Insert sample publishers
+INSERT INTO Publishers (Name, Address, Phone, Email, Website)
+VALUES 
+('Penguin Random House', '1745 Broadway, New York, NY 10019', '212-782-9000', 'info@penguinrandomhouse.com', 'www.penguinrandomhouse.com'),
+('HarperCollins', '195 Broadway, New York, NY 10007', '212-207-7000', 'info@harpercollins.com', 'www.harpercollins.com');
+
+-- Insert sample authors
+INSERT INTO Authors (FirstName, LastName, BirthDate, Nationality, Biography)
+VALUES
+('George', 'Orwell', '1903-06-25', 'British', 'Eric Arthur Blair, better known by his pen name George Orwell, was an English novelist...'),
+('J.K.', 'Rowling', '1965-07-31', 'British', 'Joanne Rowling, better known by her pen name J.K. Rowling, is a British author...');
+
+-- Insert sample books
+INSERT INTO Books (ISBN, Title, PublisherID, PublicationYear, Edition, Category, ShelfLocation, TotalCopies, AvailableCopies)
+VALUES
+('978-0451524935', '1984', 1, 1949, '1st', 'Dystopian', 'A12', 5, 5),
+('978-0439554930', 'Harry Potter and the Philosopher''s Stone', 2, 1997, '1st', 'Fantasy', 'B7', 3, 3);
+
+-- Link books to authors
+INSERT INTO BookAuthors (BookID, AuthorID)
+VALUES
+(1, 1),
+(2, 2);
+
+-- Insert sample members
+INSERT INTO Members (FirstName, LastName, Email, Phone, Address, MembershipDate, MembershipExpiry, Status)
+VALUES
+('John', 'Doe', 'john.doe@email.com', '555-123-4567', '123 Main St, Anytown, USA', '2023-01-15', '2024-01-15', 'Active'),
+('Jane', 'Smith', 'jane.smith@email.com', '555-987-6543', '456 Oak Ave, Somewhere, USA', '2023-02-20', '2024-02-20', 'Active');
