@@ -1,0 +1,10 @@
+CREATE TABLE Reservations (
+    ReservationID INT PRIMARY KEY AUTO_INCREMENT,
+    BookID INT NOT NULL,
+    MemberID INT NOT NULL,
+    ReservationDate DATETIME NOT NULL,
+    ExpirationDate DATETIME NOT NULL,
+    Status ENUM('Pending', 'Fulfilled', 'Cancelled', 'Expired') DEFAULT 'Pending',
+    FOREIGN KEY (BookID) REFERENCES Books(BookID),
+    FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
