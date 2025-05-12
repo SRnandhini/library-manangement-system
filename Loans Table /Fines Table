@@ -1,0 +1,22 @@
+CREATE TABLE Loans (
+    LoanID INT PRIMARY KEY AUTO_INCREMENT,
+    BookID INT NOT NULL,
+    MemberID INT NOT NULL,
+    LoanDate DATE NOT NULL,
+    DueDate DATE NOT NULL,
+    ReturnDate DATE,
+    Status ENUM('On Loan', 'Returned', 'Overdue') DEFAULT 'On Loan',
+    FOREIGN KEY (BookID) REFERENCES Books(BookID),
+    FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
+CREATE TABLE Fines (
+    FineID INT PRIMARY KEY AUTO_INCREMENT,
+    LoanID INT,
+    MemberID INT,
+    Amount DECIMAL(10,2) NOT NULL,
+    IssueDate DATE NOT NULL,
+    PaymentDate DATE,
+    Status ENUM('Pending', 'Paid') DEFAULT 'Pending',
+    FOREIGN KEY (LoanID) REFERENCES Loans(LoanID),
+    FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
