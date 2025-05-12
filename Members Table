@@ -1,0 +1,11 @@
+CREATE TABLE Members (
+    MemberID INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE,
+    Phone VARCHAR(20),
+    Address VARCHAR(200),
+    MembershipDate DATE NOT NULL,
+    MembershipExpiry DATE NOT NULL,
+    Status ENUM('Active', 'Inactive', 'Suspended') DEFAULT 'Active'
+);
