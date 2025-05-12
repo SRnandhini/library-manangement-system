@@ -1,0 +1,8 @@
+CREATE TABLE Publishers (
+    PublisherID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    Address VARCHAR(200),
+    Phone VARCHAR(20),
+    Email VARCHAR(100),
+    Website VARCHAR(100)
+);
