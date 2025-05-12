@@ -1,0 +1,13 @@
+CREATE TABLE Books (
+    BookID INT PRIMARY KEY AUTO_INCREMENT,
+    ISBN VARCHAR(20) UNIQUE NOT NULL,
+    Title VARCHAR(200) NOT NULL,
+    PublisherID INT,
+    PublicationYear INT,
+    Edition VARCHAR(20),
+    Category VARCHAR(50),
+    ShelfLocation VARCHAR(20),
+    TotalCopies INT DEFAULT 1,
+    AvailableCopies INT DEFAULT 1,
+    FOREIGN KEY (PublisherID) REFERENCES Publishers(PublisherID)
+);
