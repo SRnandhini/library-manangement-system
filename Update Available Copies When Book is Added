@@ -1,0 +1,10 @@
+DELIMITER //
+CREATE TRIGGER after_book_insert
+AFTER INSERT ON Books
+FOR EACH ROW
+BEGIN
+    IF NEW.AvailableCopies IS NULL THEN
+        UPDATE Books SET AvailableCopies = NEW.TotalCopies WHERE BookID = NEW.BookID;
+    END IF;
+END //
+DELIMITER ;
